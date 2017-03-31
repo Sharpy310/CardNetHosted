@@ -35,10 +35,11 @@ class CardnetHostedGatewayFactory extends GatewayFactory
                 'sandbox' => "",
                 "txntype" => "",
                 "storename" => "",
+                "shared_secret" => "",
                 "mode" => "",
             );
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = ["sandbox", "txntype", "storename", "mode"];
+            $config['payum.required_options'] = ["sandbox", "txntype", "storename", "shared_secret", "mode"];
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
