@@ -7,16 +7,16 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Kotlyar Maksim",
-            "email": "kotlyar.maksim@gmail.com"
+            "name": "liam sorsby",
+            "email": "liam@eezeecommerce.com"
         },
         {
-            "name":     "Payum project",
-            "homepage": "http://payum.org/"
+            "name":     "Payum CardNet Hosted Extension",
+            "homepage": "https://www.eezeecommerce.com"
         },
         {
             "name":     "Community contributions",
-            "homepage": "https://github.com/Payum/AuthorizeNetAim/contributors"
+            "homepage": "https://www.eezeecommerce.com"
         }
     ],
     "require": {
