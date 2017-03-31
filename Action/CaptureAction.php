@@ -7,6 +7,7 @@ use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 use liamsorsby\CardNetHosted\Api;
+use Payum\Core\ApiAwareTrait;
 
 class CaptureAction implements ActionInterface
 {
