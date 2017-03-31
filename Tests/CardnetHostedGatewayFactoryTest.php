@@ -133,7 +133,7 @@ class CardnetHostedGatewayFactoryTest extends \PHPUnit_Framework_TestCase
      * @test
      *
      * @expectedException \Payum\Core\Exception\LogicException
-     * @expectedExceptionMessage The sandbox, txntype, storename, mode fields are required.
+     * @expectedExceptionMessage The sandbox, txntype, storename, shared_secret, mode fields are required.
      */
     public function shouldThrowIfRequiredOptionsNotPassed()
     {
