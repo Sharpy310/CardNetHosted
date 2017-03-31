@@ -1,5 +1,5 @@
 {
-    "name": "payum/cardnethosted",
+    "name": "liamsorsby/cardnethosted",
     "type": "project",
     "description": "The Payum extension. Rapid extensino development",
     "keywords": ["payment"],
