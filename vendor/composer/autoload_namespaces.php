@@ -8,6 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Pdp\\' => array($vendorDir . '/jeremykendall/php-domain-parser/src'),
-    'Payum\\Skeleton' => array($baseDir . '/'),
+    'Payum\\cardnethosted' => array($baseDir . '/'),
     'Payum\\Core\\' => array($vendorDir . '/payum/core'),
 );

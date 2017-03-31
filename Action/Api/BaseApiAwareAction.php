@@ -1,12 +1,12 @@
 <?php
-namespace Payum\Skeleton\Action\Api;
+namespace liamsorsby\CardNetHosted\Action\Api;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\ApiAwareTrait;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
-use Payum\Skeleton\Api;
+use liamsorsby\CardNetHosted\Api;
 
 abstract class BaseApiAwareAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {

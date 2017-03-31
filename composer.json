@@ -1,5 +1,5 @@
 {
-    "name": "payum/skeleton",
+    "name": "payum/cardnethosted",
     "type": "project",
     "description": "The Payum extension. Rapid extensino development",
     "keywords": ["payment"],
@@ -30,9 +30,9 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": { "Payum\\Skeleton": "" }
+        "psr-0": { "Payum\\cardnethosted": "" }
     },
-    "target-dir": "Payum/Skeleton",
+    "target-dir": "Payum/cardnethosted",
     "extra": {
         "branch-alias": {
             "dev-master": "1.3-dev"
