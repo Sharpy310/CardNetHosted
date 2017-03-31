@@ -3,10 +3,27 @@ namespace liamsorsby\CardNetHosted;
 
 use Http\Message\MessageFactory;
 use Payum\Core\Exception\Http\HttpException;
+use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\HttpClientInterface;
+use Payum\Core\Bridge\Spl\ArrayObject;
 
 class Api
 {
+
+
+    /**
+     * It sends back if the message originated with PayPal.
+     */
+    const NOTIFY_VERIFIED = 'VERIFIED';
+    /**
+     * if there is any discrepancy with what was originally sent
+     */
+    const NOTIFY_INVALID = 'INVALID';
+
+
+    const CMD_NOTIFY_VALIDATE = '_notify-validate';
+
+
     /**
      * @var HttpClientInterface
      */
@@ -20,7 +37,13 @@ class Api
     /**
      * @var array
      */
-    protected $options = [];
+    protected $options = array(
+        'sandbox' => true,
+        'txntype => ""',
+        'storename' => "",
+        'shared_secret' => "",
+        'mode' => "",
+    );
 
     /**
      * @param array               $options
@@ -31,6 +54,19 @@ class Api
      */
     public function __construct(array $options, HttpClientInterface $client, MessageFactory $messageFactory)
     {
+        $options = ArrayObject::ensureArrayObject($options);
+        $options->defaults($this->options);
+        $options->validateNotEmpty(array(
+            'txntype',
+            'storename',
+            'shared_secret',
+            'mode'
+        ));
+
+        if (false === is_bool($this->options['sandbox'])) {
+            throw new InvalidArgumentException("The boolean sandbox option must be set.");
+        }
+
         $this->options = $options;
         $this->client = $client;
         $this->messageFactory = $messageFactory;
@@ -41,11 +77,13 @@ class Api
      *
      * @return array
      */
-    protected function doRequest($method, array $fields)
+    public function notifyValidate(array $fields)
     {
         $headers = [];
 
-        $request = $this->messageFactory->createRequest($method, $this->getApiEndpoint(), $headers, http_build_query($fields));
+        $fields['cmd'] = self::CMD_NOTIFY_VALIDATE;
+
+        $request = $this->messageFactory->createRequest('POST', $this->getIpnEndpoint(), $headers, http_build_query($fields));
 
         $response = $this->client->send($request);
 
@@ -59,8 +97,8 @@ class Api
     /**
      * @return string
      */
-    protected function getApiEndpoint()
+    public function getIpnEndpoint()
     {
-        return $this->options['sandbox'] ? 'http://sandbox.example.com' : 'http://example.com';
+        return $this->options['sandbox'] ? 'https://test.ipg-online.com/connect/gateway/processing' : 'https://ipg-online.com/connect/gateway/processing';
     }
 }

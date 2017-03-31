@@ -1,6 +1,7 @@
 <?php
 namespace liamsorsby\CardNetHosted\Action;
 
+use liamsorsby\CardNetHosted\Constants;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Request\GetStatusInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -19,7 +20,49 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        if ($model["error"]) {
+            $request->markFailed();
+            return;
+        }
+
+        if (false == $model['status'] && false == $model['card']) {
+            $request->markNew();
+            return;
+        }
+
+        if (Constants::STATUS_DECLINED == $model["status"]) {
+            $request->markFailed();
+            return;
+        }
+
+        if (Constants::STATUS_FAILED == $model["status"]) {
+            $request->markFailed();
+            return;
+        }
+
+        if ($model['refunded']) {
+            $request->markRefunded();
+            return;
+        }
+
+        if (Constants::STATUS_SUCCEEDED == $model['status'] && $model['captured'] && $model['paid']) {
+            $request->markCaptured();
+            return;
+        }
+        if (Constants::STATUS_APPROVED == $model['status'] && $model['captured'] && $model['paid']) {
+            $request->markCaptured();
+            return;
+        }
+        if (Constants::STATUS_SUCCEEDED == $model['status'] && false == $model['captured']) {
+            $request->markAuthorized();
+            return;
+        }
+        if (Constants::STATUS_APPROVED == $model['status'] && false == $model['captured']) {
+            $request->markAuthorized();
+            return;
+        }
+
+        $request->markUnknown();
     }
 
     /**
