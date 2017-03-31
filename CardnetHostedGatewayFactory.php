@@ -44,7 +44,15 @@ class CardnetHostedGatewayFactory extends GatewayFactory
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
 
-                return new Api((array) $config, $config['payum.http_client'], $config['httplug.message_factory']);
+                $cardnetConfig = array(
+                    'sandbox' => $config['sandbox'],
+                    'txntype' => $config['txntype'],
+                    'storename' => $config['storename'],
+                    'shared_secret' => $config['shared_secret'],
+                    'mode' => $config['mode'],
+                );
+
+                return new Api($cardnetConfig, $config['payum.http_client'], $config['httplug.message_factory']);
             };
         }
     }

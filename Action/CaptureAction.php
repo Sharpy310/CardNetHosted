@@ -6,10 +6,19 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
+use liamsorsby\CardNetHosted\Api;
 
 class CaptureAction implements ActionInterface
 {
+
+    use ApiAwareTrait;
     use GatewayAwareTrait;
+
+
+    public function __construct()
+    {
+        $this->apiClass = Api::class;
+    }
 
     /**
      * {@inheritDoc}
