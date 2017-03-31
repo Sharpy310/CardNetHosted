@@ -6,8 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'liamsorsby\\CardNetHosted' => array($baseDir . '/'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Pdp\\' => array($vendorDir . '/jeremykendall/php-domain-parser/src'),
-    'Payum\\cardnethosted' => array($baseDir . '/'),
     'Payum\\Core\\' => array($vendorDir . '/payum/core'),
 );

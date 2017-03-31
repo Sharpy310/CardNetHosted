@@ -32,10 +32,13 @@ class CardnetHostedGatewayFactory extends GatewayFactory
 
         if (false == $config['payum.api']) {
             $config['payum.default_options'] = array(
-                'sandbox' => true,
+                'sandbox' => "",
+                "txntype" => "",
+                "storename" => "",
+                "mode" => "",
             );
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = [];
+            $config['payum.required_options'] = ["sandbox", "txntype", "storename", "mode"];
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);

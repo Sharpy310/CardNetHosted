@@ -64,7 +64,7 @@ class ComposerAutoloaderInit189a9f97c4433ea81f71a101cc48f818
     public static function autoload($class)
     {
         $dir = dirname(dirname(__DIR__)) . '/';
-        $prefixes = array('Payum\\cardnethosted');
+        $prefixes = array('liamsorsby\\CardNetHosted');
         foreach ($prefixes as $prefix) {
             if (0 !== strpos($class, $prefix)) {
                 continue;
