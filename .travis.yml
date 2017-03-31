@@ -42,4 +42,4 @@ script:
 
 notifications:
   email:
-- liam@eezeecommerce.com
+    - liam@eezeecommerce.com
