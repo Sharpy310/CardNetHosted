@@ -20,45 +20,24 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        if ($model["error"]) {
-            $request->markFailed();
-            return;
-        }
-
-        if (false == $model['status'] && false == $model['card']) {
-            $request->markNew();
-            return;
-        }
-
-        if (Constants::STATUS_DECLINED == $model["status"]) {
-            $request->markFailed();
-            return;
-        }
-
-        if (Constants::STATUS_FAILED == $model["status"]) {
-            $request->markFailed();
-            return;
-        }
-
-        if ($model['refunded']) {
-            $request->markRefunded();
-            return;
-        }
-
-        if (Constants::STATUS_SUCCEEDED == $model['status'] && $model['captured'] && $model['paid']) {
+        if ($model["response_code_3dsecure"] == 1) {
             $request->markCaptured();
             return;
         }
-        if (Constants::STATUS_APPROVED == $model['status'] && $model['captured'] && $model['paid']) {
+        if ($model["response_code_3dsecure"] == 2) {
             $request->markCaptured();
             return;
         }
-        if (Constants::STATUS_SUCCEEDED == $model['status'] && false == $model['captured']) {
-            $request->markAuthorized();
+        if ($model["processor_response_code"] == 00 || $model["processor_response_code"] == 4000) {
+            $request->markCaptured();
             return;
         }
-        if (Constants::STATUS_APPROVED == $model['status'] && false == $model['captured']) {
-            $request->markAuthorized();
+        if ($model["response_code_3dsecure"] == 3) {
+            $request->markFailed();
+            return;
+        }
+        if ($model["response_code_3dsecure"] == 4) {
+            $request->markFailed();
             return;
         }
 
