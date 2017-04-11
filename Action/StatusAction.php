@@ -20,23 +20,15 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        if ($model["response_code_3dsecure"] == 1) {
+        if ($model["status"] == "APPROVED") {
             $request->markCaptured();
             return;
         }
-        if ($model["response_code_3dsecure"] == 2) {
-            $request->markCaptured();
-            return;
-        }
-        if ($model["processor_response_code"] == 00 || $model["processor_response_code"] == 4000) {
-            $request->markCaptured();
-            return;
-        }
-        if ($model["response_code_3dsecure"] == 3) {
+        if ($model["status"] == "FAILED") {
             $request->markFailed();
             return;
         }
-        if ($model["response_code_3dsecure"] == 4) {
+        if ($model["status"] == "DECLINED") {
             $request->markFailed();
             return;
         }

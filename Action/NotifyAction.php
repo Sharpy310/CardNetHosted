@@ -27,7 +27,7 @@ class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayAwareIn
     /**
      * {@inheritDoc}
      *
-     * @param Convert $request
+     * @param $request Notify
      */
     public function execute($request)
     {
@@ -37,7 +37,7 @@ class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayAwareIn
 
         $this->gateway->execute($httpRequest = new GetHttpRequest());
 
-        $details->replace($httpRequest->query);
+        $details->replace($httpRequest->request);
 
         throw new HttpResponse('OK', 200);
     }
