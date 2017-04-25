@@ -152,6 +152,6 @@ class Api
      */
     public function getApiEndpoint()
     {
-        return $this->options['sandbox'] ? 'https://test.ipg-online.com/connect/gateway/processing' : 'https://ipg-online.com/connect/gateway/processing';
+        return $this->options['sandbox'] ? 'https://test.ipg-online.com/connect/gateway/processing' : 'https://www.ipg-online.com/vt/login';
     }
 }
