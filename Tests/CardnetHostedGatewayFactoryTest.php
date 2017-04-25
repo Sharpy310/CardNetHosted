@@ -58,7 +58,7 @@ class CardnetHostedGatewayFactoryTest extends \PHPUnit_Framework_TestCase
     public function shouldAllowCreateGateway()
     {
         $factory = new CardnetHostedGatewayFactory();
-        $gateway = $factory->create(array('sandbox' => true, 'txntype' => 'sale', 'storename' => '1111', 'mode' => 'payonly', "shared_secret" => "123"));
+        $gateway = $factory->create(array('sandbox' => true, 'txntype' => 'sale', 'storename' => '1111', 'mode' => 'payonly', "shared_secret" => "123", "password" => "password"));
         $this->assertInstanceOf('Payum\Core\Gateway', $gateway);
         $this->assertAttributeNotEmpty('apis', $gateway);
         $this->assertAttributeNotEmpty('actions', $gateway);
@@ -114,7 +114,7 @@ class CardnetHostedGatewayFactoryTest extends \PHPUnit_Framework_TestCase
         $config = $factory->createConfig();
         $this->assertInternalType('array', $config);
         $this->assertArrayHasKey('payum.default_options', $config);
-        $this->assertEquals(array('sandbox' => '', 'txntype' => '', 'storename' => '', 'mode' => '', "shared_secret" => ""), $config['payum.default_options']);
+        $this->assertEquals(array('sandbox' => '', 'txntype' => '', 'storename' => '', 'mode' => '', "shared_secret" => "", "password" => ""), $config['payum.default_options']);
     }
     /**
      * @test

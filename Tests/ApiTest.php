@@ -20,7 +20,8 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "txntype" => "test",
             "storename" => "name",
             "shared_secret" => "secret",
-            "mode" => "mode"
+            "mode" => "mode",
+            "password" => "password"
         ), $this->createHttpClientMock(), $this->createHttpMessageFactory());
     }
 
@@ -32,7 +33,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfTxnTypeOptionNotSetInConstructor()
     {
-        new Api(array("sandbox" => true, "storename" => "name", "shared_secret" => "secret", "mode" => "mode"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
+        new Api(array("sandbox" => true, "storename" => "name", "shared_secret" => "secret", "mode" => "mode", "password" => "password"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
     }
 
 
@@ -44,7 +45,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfStorenameOptionNotSetInConstructor()
     {
-        new Api(array("sandbox" => true,"txntype" => "test", "shared_secret" => "secret", "mode" => "mode"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
+        new Api(array("sandbox" => true,"txntype" => "test", "shared_secret" => "secret", "mode" => "mode", "password" => "password"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
     }
 
 
@@ -56,7 +57,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfSharedSecretOptionNotSetInConstructor()
     {
-        new Api(array("sandbox" => true,"txntype" => "test", "storename" => "name", "mode" => "mode"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
+        new Api(array("sandbox" => true,"txntype" => "test", "storename" => "name", "mode" => "mode", "password" => "password"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
     }
 
     /**
@@ -67,7 +68,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function throwIfModeOptionNotSetInConstructor()
     {
-        new Api(array("sandbox" => true, "txntype" => "test", "storename" => "name", "shared_secret" => "secret"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
+        new Api(array("sandbox" => true, "txntype" => "test", "storename" => "name", "shared_secret" => "secret", "password" => "password"), $this->createHttpClientMock(), $this->createHttpMessageFactory());
     }
 
 
@@ -81,9 +82,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "txntype" => "test",
             "storename" => "name",
             "shared_secret" => "secret",
-            "mode" => "mode"
+            "mode" => "mode",
+            "password" => "password"
         ), $this->createHttpClientMock(), $this->createHttpMessageFactory());
-        $this->assertEquals('https://test.ipg-online.com/connect/gateway/processing', $api->getIpnEndpoint());
+        $this->assertEquals('https://test.ipg-online.com/connect/gateway/processing', $api->getApiEndpoint());
     }
 
     /**
@@ -96,9 +98,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "txntype" => "test",
             "storename" => "name",
             "shared_secret" => "secret",
-            "mode" => "mode"
+            "mode" => "mode",
+            "password" => "password"
         ), $this->createHttpClientMock(), $this->createHttpMessageFactory());
-        $this->assertEquals('https://ipg-online.com/connect/gateway/processing', $api->getIpnEndpoint());
+        $this->assertEquals('https://www.ipg-online.com/vt/login', $api->getApiEndpoint());
     }
     /**
      * @test
@@ -121,9 +124,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "txntype" => "test",
             "storename" => "name",
             "shared_secret" => "secret",
-            "mode" => "mode"
+            "mode" => "mode",
+            "password" => "password",
         ), $clientMock, $this->createHttpMessageFactory());
-        $api->notifyValidate(array());
+        $api->doCapture(array("chargetotal" => 0.00));
     }
     /**
      * @test
@@ -146,18 +150,21 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "txntype" => "test",
             "storename" => "name",
             "shared_secret" => "secret",
-            "mode" => "mode"
+            "mode" => "mode",
+            "password" => "password"
         ), $clientMock, $this->createHttpMessageFactory());
         $expectedNotification = array(
             'foo' => 'foo',
             'bar' => 'baz',
+            "chargetotal" => "0",
+            "METHOD" => "DoCapture"
         );
-        $api->notifyValidate($expectedNotification);
+        $api->doCapture($expectedNotification);
         $content = array();
         parse_str($actualRequest->getBody()->getContents(), $content);
         $this->assertInstanceOf('Psr\Http\Message\RequestInterface', $actualRequest);
-        $this->assertEquals(array('cmd' => Api::CMD_NOTIFY_VALIDATE) + $expectedNotification, $content);
-        $this->assertEquals($api->getIpnEndpoint(), $actualRequest->getUri());
+        $this->assertEquals($expectedNotification, $content);
+        $this->assertEquals($api->getApiEndpoint(), $actualRequest->getUri());
         $this->assertEquals('POST', $actualRequest->getMethod());
     }
     /**
@@ -178,9 +185,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "txntype" => "test",
             "storename" => "name",
             "shared_secret" => "secret",
-            "mode" => "mode"
+            "mode" => "mode",
+            "password" => "password"
         ), $clientMock, $this->createHttpMessageFactory());
-        $this->assertTrue($api->notifyValidate(array()) instanceof Response);
+        $this->assertTrue(is_array($api->doCapture(array("chargetotal" => "0"))));
     }
 
     /**
