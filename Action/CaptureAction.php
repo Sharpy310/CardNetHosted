@@ -24,21 +24,6 @@ class CaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwareI
     use GenericTokenFactoryAwareTrait;
 
     /**
-     * @var Api
-     */
-    protected $api;
-    /**
-     * {@inheritDoc}
-     */
-    public function setApi($api)
-    {
-        if (false === $api instanceof Api) {
-            throw new UnsupportedApiException('Not supported.');
-        }
-        $this->api = $api;
-    }
-
-    /**
      * @param GatewayInterface $gateway
      */
     public function setGateway(GatewayInterface $gateway)

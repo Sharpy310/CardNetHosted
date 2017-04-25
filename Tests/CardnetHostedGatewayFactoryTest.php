@@ -60,7 +60,6 @@ class CardnetHostedGatewayFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new CardnetHostedGatewayFactory();
         $gateway = $factory->create(array('sandbox' => true, 'txntype' => 'sale', 'storename' => '1111', 'mode' => 'payonly', "shared_secret" => "123", "password" => "password"));
-        $gateway->addApi(Api::class);
         $this->assertInstanceOf('Payum\Core\Gateway', $gateway);
         $this->assertAttributeNotEmpty('apis', $gateway);
         $this->assertAttributeNotEmpty('actions', $gateway);
