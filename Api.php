@@ -146,6 +146,20 @@ class Api
         return hash('sha256',$ascii);
     }
 
+    public function validateHash(array $params)
+    {
+        var_dump($params["response_hash"]);
+        var_dump($this->getHash($params["chargetotal"]));
+        if (empty($params["response_hash"]))
+        {
+            return false;
+        }
+
+        $hash = $params["response_hash"];
+        unset($params["response_hash"]);
+
+        return $hash === $this->getHash($params["chargetotal"]);
+    }
 
     /**
      * @return string

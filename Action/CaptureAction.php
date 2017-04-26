@@ -48,6 +48,14 @@ class CaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwareI
         if (isset($httpRequest->request["status"])) {
             $model->replace($httpRequest->request);
         } else {
+
+            $notifyToken = $this->tokenFactory->createNotifyToken(
+                $request->getToken()->getGatewayName(),
+                $request->getToken()->getDetails()
+            );
+            $model["notify_token"] = $notifyToken->getHash();
+            $model["payum_token"] = $request->getToken()->getHash();
+            $model['transactionNotificationURL'] = $notifyToken->getTargetUrl();
             throw new HttpPostRedirect(
                 $this->api->getApiEndpoint(),
                 $this->api->addAuthorizeFields($model->toUnsafeArray())
