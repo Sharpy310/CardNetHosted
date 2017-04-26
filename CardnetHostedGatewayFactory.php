@@ -27,7 +27,7 @@ class CardnetHostedGatewayFactory extends GatewayFactory
 
         if (false == $config['payum.api']) {
             $config['payum.default_options'] = array(
-                'sandbox' => "",
+                'sandbox' => false,
                 "txntype" => "",
                 "storename" => "",
                 "shared_secret" => "",
@@ -35,7 +35,7 @@ class CardnetHostedGatewayFactory extends GatewayFactory
                 "password" => "",
             );
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = ["sandbox", "txntype", "storename", "shared_secret", "mode"];
+            $config['payum.required_options'] = ["txntype", "storename", "shared_secret", "mode"];
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);

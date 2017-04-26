@@ -38,7 +38,7 @@ class Api
      * @var array
      */
     protected $options = array(
-        'sandbox' => true,
+        'sandbox' => false,
         'txntype => ""',
         'storename' => "",
         'shared_secret' => "",
@@ -166,6 +166,6 @@ class Api
      */
     public function getApiEndpoint()
     {
-        return $this->options['sandbox'] ? 'https://test.ipg-online.com/connect/gateway/processing' : 'https://www.ipg-online.com/vt/login';
+        return $this->options['sandbox'] ? 'https://test.ipg-online.com/connect/gateway/processing' : 'https://www.ipg-online.com/connect/gateway/processing';
     }
 }
