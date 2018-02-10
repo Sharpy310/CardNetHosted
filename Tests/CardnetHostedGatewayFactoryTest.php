@@ -98,6 +98,10 @@ class CardnetHostedGatewayFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new CardnetHostedGatewayFactory(array(
             'foo' => 'fooVal',
             'bar' => 'barVal',
+            'txntype' => '',
+            'storename' => '',
+            "shared_secret" => "",
+            'mode' => ''
         ));
         $config = $factory->createConfig();
         $this->assertInternalType('array', $config);
@@ -134,7 +138,7 @@ class CardnetHostedGatewayFactoryTest extends \PHPUnit_Framework_TestCase
      * @test
      *
      * @expectedException \Payum\Core\Exception\LogicException
-     * @expectedExceptionMessage The sandbox, txntype, storename, shared_secret, mode fields are required.
+     * @expectedExceptionMessage The txntype, storename, shared_secret, mode fields are required.
      */
     public function shouldThrowIfRequiredOptionsNotPassed()
     {
