@@ -101,7 +101,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             "mode" => "mode",
             "password" => "password"
         ), $this->createHttpClientMock(), $this->createHttpMessageFactory());
-        $this->assertEquals('https://www.ipg-online.com/vt/login', $api->getApiEndpoint());
+        $this->assertEquals('https://www.ipg-online.com/connect/gateway/processing', $api->getApiEndpoint());
     }
     /**
      * @test
